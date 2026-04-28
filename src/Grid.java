@@ -29,12 +29,18 @@ public class Grid {
 
         for(int i = -1; i <= 1; i++){
             for(int j = -1; j <= 1; j++){
-                if(x + i < 0 || x + i > length - 1 || y + j < 0 || y + j > width - 1 || (i == 0 && j == 0)){
-                    res += Math.random() < lifeProbability ? 1 : 0;
-                    continue;
-                }
+                if(i == 0 && j == 0) continue;
 
-                res += grid[x + i][y + j] ? 1 : 0;
+                int checkX = x + i;
+                int checkY = y + j;
+                
+                if(checkX > length - 1) checkX = checkX % length;
+                if(checkY > width - 1) checkY = checkY % width;
+
+                if(checkX < 0) checkX = length + checkX;
+                if(checkY < 0) checkY = width + checkY;
+
+                res += grid[checkX][checkY] ? 1 : 0;
             }
         }
 

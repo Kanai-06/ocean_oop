@@ -1,11 +1,14 @@
 public class Main {
     public static void main(String[] args) throws InterruptedException{
+        Grid grid = new Grid(62, 157, 0.08);
+        Grid.clear();
 
         while(true){
-            Grid.clear();
-            Grid grid = new Grid(10, 0.5);
-            grid.print();
-            Thread.sleep(500);
+            grid.compute();
+            System.out.print(String.format("%c[%d;%df",0x1b,0,0));
+            System.out.print(grid);
+            Thread.sleep(33);
         }
+        
     }
 }

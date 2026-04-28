@@ -2,18 +2,25 @@ public class Main {
     public static void main(String[] args) {
         String WHITE = "\u001B[47m";
         String RESET = "\u001B[0m";
-        String CELL = "ㅤ";
+        String DEAD_CELL = "ㅤ";
+        String LIVE_CELL = WHITE + DEAD_CELL + RESET;
 
-        for(int i = 0; i < 5; i++){
-            for(int j = 0; j < 10; j++){
-                if(Math.random() < 0.5){
-                    System.out.print(WHITE + CELL + RESET );
-                } else{
-                    System.out.print(CELL);
-                }
-            }
-            System.out.println();
-        }
+        
+
         
     }
+
+    public boolean[][] createRandomGrid(int size, double lifeProbability){
+        boolean[][] grid = new boolean[size][size];
+
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                grid[i][j] = Math.random() < lifeProbability;
+            }
+        }
+
+        return grid;
+    }
+
+
 }

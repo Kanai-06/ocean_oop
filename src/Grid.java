@@ -26,11 +26,13 @@ public class Grid {
         }
     }
 
-    private int cellScore(int x, int y){
+    private int nbNeighors(int x, int y){
         int res = 0;
 
         for(int i = -1; i <= 1; i++){
             for(int j = -1; j <= 1; j++){
+                if(i == 0 && j == 0) continue;
+
                 int checkX = x + i;
                 int checkY = y + j;
                 
@@ -48,11 +50,10 @@ public class Grid {
     }
 
     private boolean computeCell(int x, int y){
-        int cellScore = cellScore(x, y);
+        int nbNeighors = nbNeighors(x, y);
 
-        if(cellScore == 3) return true;
-        if(cellScore == 4) return grid[x][y];
-        return false;
+        if((!grid[x][y] && nbNeighors == 3)) return true;
+        return grid[x][y];
     }
 
     public void compute(){

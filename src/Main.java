@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) throws InterruptedException{
-        Grid grid = new Grid(320, 900, 0.2);
+        Grid grid = new Grid(320, 900, 0.02);
         Grid.clear();
 
         while(true){

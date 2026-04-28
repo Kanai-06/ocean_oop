@@ -5,10 +5,12 @@ public class Grid {
     private final double lifeProbability;
     private static final String GREEN = "\u001B[42m";
     private static final String BLUE = "\u001B[44m";
+    private static final String WHITE = "\u001B[47m";
+    private static final String BLACK = "\u001B[40m";
     private static final String RESET = "\u001B[0m";
     private static final String CELL = "ㅤ";
-    private static final String DEAD_CELL = BLUE + CELL + RESET; 
-    private static final String LIVE_CELL = GREEN + CELL + RESET;   
+    private static final String DEAD_CELL = BLACK + CELL + RESET; 
+    private static final String LIVE_CELL = WHITE + CELL + RESET;   
 
     public Grid(int length, int width, double lifeProbability){
         this.length = length;
@@ -24,13 +26,11 @@ public class Grid {
         }
     }
 
-    private int nbNeighors(int x, int y){
+    private int cellScore(int x, int y){
         int res = 0;
 
         for(int i = -1; i <= 1; i++){
             for(int j = -1; j <= 1; j++){
-                if(i == 0 && j == 0) continue;
-
                 int checkX = x + i;
                 int checkY = y + j;
                 
@@ -48,10 +48,10 @@ public class Grid {
     }
 
     private boolean computeCell(int x, int y){
-        int nbNeighors = nbNeighors(x, y);
+        int cellScore = cellScore(x, y);
 
-        if(grid[x][y] && (nbNeighors < 2 || nbNeighors > 3)) return false;
-        if((!grid[x][y] && nbNeighors == 3) || (grid[x][y] && (nbNeighors == 2 || nbNeighors == 3))) return true;
+        if(cellScore == 3) return true;
+        if(cellScore == 4) return grid[x][y];
         return false;
     }
 

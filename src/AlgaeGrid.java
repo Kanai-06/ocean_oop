@@ -1,10 +1,10 @@
 public class AlgaeGrid extends Grid{
-    public AlgaeGrid(int length, int width, double lifeProbability){
+    public AlgaeGrid(int length, int width, double probability){
         super(length, width);
 
         for(int i = 0; i < length; i++){
             for(int j = 0; j < width; j++){
-                grid[i][j] = Math.random() < lifeProbability;
+                grid[i][j] = Math.random() < probability;
             }
         }
     }

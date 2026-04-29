@@ -22,29 +22,6 @@ public abstract class Grid {
         grid = new Object[length][width];
     }
 
-    protected int nbNeighors(int x, int y){
-        int res = 0;
-
-        for(int i = -1; i <= 1; i++){
-            for(int j = -1; j <= 1; j++){
-                if(i == 0 && j == 0) continue;
-
-                int checkX = x + i;
-                int checkY = y + j;
-                
-                if(checkX > length - 1) checkX = checkX % length;
-                if(checkY > width - 1) checkY = checkY % width;
-
-                if(checkX < 0) checkX = length + checkX;
-                if(checkY < 0) checkY = width + checkY;
-
-                res += (boolean)(grid[checkX][checkY]) ? 1 : 0;
-            }
-        }
-
-        return res;
-    }
-
     protected abstract Object computeCell(int x, int y);
 
     public abstract void compute();
@@ -54,7 +31,15 @@ public abstract class Grid {
 
         for(int i = 0; i < length; i++){
             for(int j = 0; j < width; j++){
-                s.append((boolean)(grid[i][j]) ? ALGAE_CELL : WATER_CELL);
+                boolean present = false;
+                String cellType = WATER_CELL;
+
+                if(grid[i][j] instanceof Algae){
+                    present = ((Algae)(grid[i][j])).get();
+                    cellType = ALGAE_CELL;
+                }
+
+                s.append(present ? cellType : WATER_CELL);
             }
             s.append("\n");
         }

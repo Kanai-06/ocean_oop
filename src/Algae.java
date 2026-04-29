@@ -1,6 +1,6 @@
 public class Algae {
     private boolean val;
-    public static int nbAlgae = 0;
+    private static int nbAlgae = 0;
 
     public Algae(boolean val){
         this.val = val;
@@ -18,5 +18,9 @@ public class Algae {
 
     public boolean get(){
         return val;
+    }
+
+    public static int nbAlgae(){
+        return nbAlgae;
     }
 }

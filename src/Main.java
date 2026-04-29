@@ -10,7 +10,7 @@ public class Main {
             algaeGrid.compute();
             System.out.print(String.format("%c[%d;%df",0x1b,0,0));
             System.out.print(algaeGrid);
-            System.out.print(Algae.nbAlgae);
+            System.out.print(Algae.nbAlgae());
         }
         
     }

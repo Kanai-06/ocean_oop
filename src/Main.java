@@ -1,12 +1,15 @@
 public class Main {
     public static void main(String[] args) throws InterruptedException{
-        Grid grid = new Grid(320, 900, 0.02);
+        int length = 320;
+        int width = 900;
+
+        Grid algaeGrid = new AlgaeGrid(length, width, 0.02);
         Grid.clear();
 
         while(true){
-            grid.compute();
+            algaeGrid.compute();
             System.out.print(String.format("%c[%d;%df",0x1b,0,0));
-            System.out.print(grid);
+            System.out.print(algaeGrid);
             // Thread.sleep(33);
         }
         

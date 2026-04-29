@@ -1,32 +1,28 @@
-public class Grid {
-    private boolean[][] grid;
-    private final int length;
-    private final int width;
-    private final double lifeProbability;
-    private static final String GREEN = "\u001B[42m";
-    private static final String BLUE = "\u001B[44m";
-    private static final String WHITE = "\u001B[47m";
-    private static final String BLACK = "\u001B[40m";
-    private static final String RESET = "\u001B[0m";
-    private static final String CELL = "ㅤ";
-    private static final String DEAD_CELL = BLACK + CELL + RESET; 
-    private static final String LIVE_CELL = WHITE + CELL + RESET;   
+public abstract class Grid {
+    protected int length;
+    protected int width;
+    protected Object[][] grid;
 
-    public Grid(int length, int width, double lifeProbability){
+    protected static final String RED = "\u001B[41m";
+    protected static final String GREEN = "\u001B[42m";
+    protected static final String BLUE = "\u001B[44m";
+    protected static final String PURPLE = "\u001B[45m";
+    protected static final String RESET = "\u001B[0m";
+    protected static final String CELL = "ㅤ";
+
+    private static final String WATER_CELL = BLUE + CELL + RESET; 
+    private static final String ALGAE_CELL = GREEN + CELL + RESET;
+    private static final String FISH_CELL = PURPLE + CELL + RESET; 
+    private static final String SHARK_CELL = RED + CELL + RESET; 
+
+    public Grid(int length, int width){
         this.length = length;
         this.width = width;
-        this.lifeProbability = lifeProbability;
 
-        grid = new boolean[length][width];
-
-        for(int i = 0; i < length; i++){
-            for(int j = 0; j < width; j++){
-                grid[i][j] = Math.random() < lifeProbability;
-            }
-        }
+        grid = new Object[length][width];
     }
 
-    private int nbNeighors(int x, int y){
+    protected int nbNeighors(int x, int y){
         int res = 0;
 
         for(int i = -1; i <= 1; i++){
@@ -42,45 +38,30 @@ public class Grid {
                 if(checkX < 0) checkX = length + checkX;
                 if(checkY < 0) checkY = width + checkY;
 
-                res += grid[checkX][checkY] ? 1 : 0;
+                res += (boolean)(grid[checkX][checkY]) ? 1 : 0;
             }
         }
 
         return res;
     }
 
-    private boolean computeCell(int x, int y){
-        int nbNeighors = nbNeighors(x, y);
+    protected abstract Object computeCell(int x, int y);
 
-        if((!grid[x][y] && nbNeighors == 3)) return true;
-        return grid[x][y];
-    }
-
-    public void compute(){
-        boolean[][] nextGeneration = new boolean[length][width];
-
-        for(int i = 0; i < length; i++){
-            for(int j = 0; j < width; j++){
-                nextGeneration[i][j] = computeCell(i, j);
-            }
-        }
-
-        grid = nextGeneration;
-    }
+    public abstract void compute();
 
     public String toString(){
         StringBuilder s = new StringBuilder();
 
         for(int i = 0; i < length; i++){
             for(int j = 0; j < width; j++){
-                s.append(grid[i][j] ? LIVE_CELL : DEAD_CELL);
+                s.append((boolean)(grid[i][j]) ? ALGAE_CELL : WATER_CELL);
             }
             s.append("\n");
         }
 
         return s.toString();
     }
-    
+
     public static void clear() {
         System.out.print("\033[H\033[2J");
         System.out.flush();

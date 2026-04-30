@@ -9,6 +9,11 @@ public class Shark extends Animal {
         nbShark++;
     }
 
+    public Shark(boolean alive, int energy, int timeAlive){
+        super(alive, energy, timeAlive);
+        nbShark++;
+    }
+
     public void die(){
         super.die();
         nbShark--;

@@ -1,4 +1,4 @@
-public abstract class Animal {
+public class Animal {
     private boolean alive;
     private int energy;
     private int timeAlive;
@@ -11,12 +11,19 @@ public abstract class Animal {
         nbAnimals++;
     }
 
+    public Animal(boolean alive, int energy, int timeAlive){
+        this(energy);
+
+        this.alive = alive;
+        this.timeAlive = timeAlive;
+    }
+
     public void die(){
         alive = false;
         nbAnimals--;
     }
 
-    public void movement(){
+    public void step(){
         if(energy == 0){
             die();
             return ;
@@ -24,6 +31,12 @@ public abstract class Animal {
 
         energy--;
         timeAlive++;
+    }
+
+    public Animal clone(){
+        if(this instanceof Fish) return new Fish(alive, energy, timeAlive);
+        if(this instanceof Shark) return new Shark(alive, energy, timeAlive);
+        return new Animal(0);
     }
 
     public void eat(int maxEnergy){

@@ -9,6 +9,11 @@ public class Fish extends Animal {
         nbFish++;
     }
 
+    public Fish(boolean alive, int energy, int timeAlive){
+        super(alive, energy, timeAlive);
+        nbFish++;
+    }
+
     public void die(){
         super.die();
         nbFish--;

@@ -3,12 +3,12 @@ public abstract class Grid {
     protected int width;
     protected Object[][] grid;
 
-    protected static final String RED = "\u001B[41m";
-    protected static final String GREEN = "\u001B[42m";
-    protected static final String BLUE = "\u001B[44m";
-    protected static final String PURPLE = "\u001B[45m";
-    protected static final String RESET = "\u001B[0m";
-    protected static final String CELL = "ㅤ";
+    private static final String RED = "\u001B[41m";
+    private static final String GREEN = "\u001B[42m";
+    private static final String BLUE = "\u001B[44m";
+    private static final String PURPLE = "\u001B[45m";
+    private static final String RESET = "\u001B[0m";
+    private static final String CELL = "ㅤ";
 
     private static final String WATER_CELL = BLUE + CELL + RESET; 
     private static final String ALGAE_CELL = GREEN + CELL + RESET;
@@ -21,8 +21,6 @@ public abstract class Grid {
 
         grid = new Object[length][width];
     }
-
-    protected abstract Object computeCell(int x, int y);
 
     public abstract void compute();
 
@@ -38,6 +36,17 @@ public abstract class Grid {
                     present = ((Algae)(grid[i][j])).get();
                     cellType = ALGAE_CELL;
                 }
+
+                if(grid[i][j] instanceof Fish){
+                    present = ((Fish)(grid[i][j])).isAlive();
+                    cellType = FISH_CELL;
+                }
+
+                if(grid[i][j] instanceof Shark){
+                    present = ((Shark)(grid[i][j])).isAlive();
+                    cellType = SHARK_CELL;
+                }
+
 
                 s.append(present ? cellType : WATER_CELL);
             }

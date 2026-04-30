@@ -15,7 +15,7 @@ public class Main {
             System.out.print(String.format("%c[%d;%df",0x1b,0,0));
             System.out.print(merge);
             
-            Thread.sleep(50);
+            Thread.sleep(33);
         }
         
     }

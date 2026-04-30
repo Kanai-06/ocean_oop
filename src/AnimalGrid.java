@@ -58,6 +58,8 @@ public class AnimalGrid extends Grid{
 
         val.step();
 
+        boolean hasMoved = false;
+
         for(int[] cell : availableNeighbors){
             if(val instanceof Fish){
                 boolean checkBirth = val.checkBirth(Fish.TIME_TO_BIRTH);
@@ -67,6 +69,7 @@ public class AnimalGrid extends Grid{
                     val.eat(Fish.MAX_ENERGY);
                     algae.set(false);
                     moveCell(x, y, cell[0], cell[1], checkBirth);
+                    hasMoved = true;
 
                     break ;
                 }
@@ -80,11 +83,14 @@ public class AnimalGrid extends Grid{
                     val.eat(Shark.MAX_ENERGY);
                     neighbor.die();
                     moveCell(x, y, cell[0], cell[1], checkBirth);
+                    hasMoved = true;
                     
                     break ;
                 }
             }
+        }
 
+        if(!hasMoved && availableNeighbors.size() > 0){
             int[] randomCell = availableNeighbors.get((int)(Math.random()*availableNeighbors.size()));
             moveCell(x, y, randomCell[0], randomCell[1], false);
         }
@@ -95,6 +101,8 @@ public class AnimalGrid extends Grid{
 
         grid[destX][destY] = val.clone();
         ((Animal)(grid[x][y])).die();
+
+        val.setMoved(true);
 
         if(birth){
             if(val instanceof Fish) grid[x][y] = new Fish();
@@ -108,7 +116,7 @@ public class AnimalGrid extends Grid{
             for(int j = 0; j < width; j++){
                 Animal val = (Animal)(grid[i][j]);
 
-                if(val instanceof Fish && val.isAlive()) computeCell(i, j);
+                if(val instanceof Fish && val.isAlive() && !val.movedThisStep()) computeCell(i, j);
             }
         }
 
@@ -116,7 +124,15 @@ public class AnimalGrid extends Grid{
             for(int j = 0; j < width; j++){
                 Animal val = (Animal)(grid[i][j]);
 
-                if(val instanceof Shark && val.isAlive()) computeCell(i, j);
+                if(val instanceof Shark && val.isAlive() && !val.movedThisStep()) computeCell(i, j);
+            }
+        }
+
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < width; j++){
+                Animal val = (Animal)(grid[i][j]);
+
+                val.setMoved(false);
             }
         }
     }

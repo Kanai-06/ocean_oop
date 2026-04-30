@@ -1,12 +1,12 @@
 public class Main {
     public static void main(String[] args) throws InterruptedException{
-        int length = 50;
-        int width = 50;
+        int length = 160;
+        int width = 450;
         
         Grid.clear();
 
         AlgaeGrid algaeGrid = new AlgaeGrid(length, width, 0.2);
-        AnimalGrid animalGrid = new AnimalGrid(length, width, 0.5, 0.1, (AlgaeGrid)(algaeGrid));
+        AnimalGrid animalGrid = new AnimalGrid(length, width, 0.3, 0.1, (AlgaeGrid)(algaeGrid));
 
         while(true){
             algaeGrid.compute();

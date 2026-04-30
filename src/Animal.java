@@ -2,6 +2,7 @@ public class Animal {
     private boolean alive;
     private int energy;
     private int timeAlive;
+    private boolean movedThisStep = false;
     private static int nbAnimals = 0;
 
     public Animal(int energy){
@@ -53,6 +54,14 @@ public class Animal {
 
     public int timeAlive(){
         return timeAlive;
+    }
+
+    public void setMoved(boolean movedThisStep){
+        this.movedThisStep = movedThisStep;
+    }
+
+    public boolean movedThisStep(){
+        return movedThisStep;
     }
 
     public static int nbAnimals(){

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AnimalGrid extends Grid{
     private Object[][] algaeGrid;
@@ -16,7 +17,7 @@ public class AnimalGrid extends Grid{
         }
     }
 
-    protected ArrayList<int[]> availableNeighbors(int x, int y){
+    private ArrayList<int[]> availableNeighbors(int x, int y){
         ArrayList<int[]> res = new ArrayList<int[]>();
 
         for(int i = -1; i <= 1; i++){
@@ -46,10 +47,12 @@ public class AnimalGrid extends Grid{
             }
         }
 
+        Collections.shuffle(res);
+
         return res;
     }
 
-    protected void computeCell(int x, int y){
+    private void computeCell(int x, int y){
         ArrayList<int[]> availableNeighbors = availableNeighbors(x, y);
         Animal val = (Animal)(grid[x][y]);
 
@@ -57,36 +60,48 @@ public class AnimalGrid extends Grid{
 
         for(int[] cell : availableNeighbors){
             if(val instanceof Fish){
+                boolean checkBirth = val.checkBirth(Fish.TIME_TO_BIRTH);
                 Algae algae = ((Algae)(algaeGrid[cell[0]][cell[1]]));
                 
                 if(algae.get()){
                     val.eat(Fish.MAX_ENERGY);
-                    grid[cell[0]][cell[1]] = val.clone();
-                    ((Animal)(grid[x][y])).die();
                     algae.set(false);
+                    moveCell(x, y, cell[0], cell[1], checkBirth);
 
                     break ;
                 }
             }
 
             if(val instanceof Shark){
+                boolean checkBirth = val.checkBirth(Shark.TIME_TO_BIRTH);
                 Animal neighbor = ((Animal)(grid[cell[0]][cell[1]]));
                 
                 if(neighbor instanceof Fish && neighbor.isAlive()){
                     val.eat(Shark.MAX_ENERGY);
                     neighbor.die();
-                    grid[cell[0]][cell[1]] = val.clone();
-                    ((Animal)(grid[x][y])).die();
+                    moveCell(x, y, cell[0], cell[1], checkBirth);
                     
                     break ;
                 }
             }
-            
+
             int[] randomCell = availableNeighbors.get((int)(Math.random()*availableNeighbors.size()));
-            grid[randomCell[0]][randomCell[1]] = val.clone();
-            ((Animal)(grid[x][y])).die();
+            moveCell(x, y, randomCell[0], randomCell[1], false);
         }
     }
+
+    private void moveCell(int x, int y, int destX, int destY, boolean birth){
+        Animal val = (Animal)(grid[x][y]);
+
+        grid[destX][destY] = val.clone();
+        ((Animal)(grid[x][y])).die();
+
+        if(birth){
+            if(val instanceof Fish) grid[x][y] = new Fish();
+            if(val instanceof Shark) grid[x][y] = new Shark();
+        }
+    }
+
 
     public void compute(){
         for(int i = 0; i < length; i++){

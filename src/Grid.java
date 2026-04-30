@@ -1,4 +1,4 @@
-public abstract class Grid {
+public class Grid {
     protected int length;
     protected int width;
     protected Object[][] grid;
@@ -22,7 +22,21 @@ public abstract class Grid {
         grid = new Object[length][width];
     }
 
-    public abstract void compute();
+    public Grid merge(Grid animalGrid){
+        Grid res = new Grid(length, width);
+
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < width; j++){
+                if(((Animal)(animalGrid.grid[i][j])).isAlive()){
+                    res.grid[i][j] = animalGrid.grid[i][j];
+                } else if(((Algae)(grid[i][j])).get()){
+                    res.grid[i][j] = grid[i][j];
+                }
+            }
+        }
+
+        return res;
+    }
 
     public String toString(){
         StringBuilder s = new StringBuilder();

@@ -33,6 +33,10 @@ public class Animal {
         timeAlive++;
     }
 
+    public boolean checkBirth(int timeToBirth){
+        return timeAlive != 0 && timeAlive % timeToBirth == 0;
+    }
+
     public Animal clone(){
         if(this instanceof Fish) return new Fish(alive, energy, timeAlive);
         if(this instanceof Shark) return new Shark(alive, energy, timeAlive);

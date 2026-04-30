@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args) throws InterruptedException{
-        int length = 160;
-        int width = 450;
+        int length = 80;
+        int width = 225;
         
         Grid.clear();
 

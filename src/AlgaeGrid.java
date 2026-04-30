@@ -38,7 +38,7 @@ public class AlgaeGrid extends Grid{
         int nbNeighors = nbNeighors(x, y);
         Algae val = (Algae)(grid[x][y]);
 
-        if((!val.get() && nbNeighors > 2)) val.set(true);
+        if((!val.get() && (nbNeighors == 3 || nbNeighors == 2))) val.set(true);
 
         return val;
     }

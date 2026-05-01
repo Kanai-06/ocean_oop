@@ -8,8 +8,8 @@ public class AnimalGrid extends Grid{
         super(length, width);
         this.algaeGrid = algaeGrid.grid;
 
-        for(int i = 0; i < length; i++){
-            for(int j = 0; j < width; j++){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < length; j++){
                 if(Math.random() < sharkProbability) grid[i][j] = new Shark();
                 else if(Math.random() < fishProbability) grid[i][j] = new Fish();
                 else grid[i][j] = new Animal(0);
@@ -27,11 +27,11 @@ public class AnimalGrid extends Grid{
                 int checkX = x + i;
                 int checkY = y + j;
                 
-                if(checkX > length - 1) checkX = checkX % length;
-                if(checkY > width - 1) checkY = checkY % width;
+                if(checkX > width - 1) checkX = checkX % width;
+                if(checkY > length - 1) checkY = checkY % length;
 
-                if(checkX < 0) checkX = length + checkX;
-                if(checkY < 0) checkY = width + checkY;
+                if(checkX < 0) checkX = width + checkX;
+                if(checkY < 0) checkY = length + checkY;
 
                 Animal val = (Animal)(grid[x][y]);
                 Animal neighborVal = (Animal)(grid[checkX][checkY]);
@@ -112,24 +112,24 @@ public class AnimalGrid extends Grid{
 
 
     public void compute(){
-        for(int i = 0; i < length; i++){
-            for(int j = 0; j < width; j++){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < length; j++){
                 Animal val = (Animal)(grid[i][j]);
 
                 if(val instanceof Fish && val.isAlive() && !val.movedThisStep()) computeCell(i, j);
             }
         }
 
-        for(int i = 0; i < length; i++){
-            for(int j = 0; j < width; j++){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < length; j++){
                 Animal val = (Animal)(grid[i][j]);
 
                 if(val instanceof Shark && val.isAlive() && !val.movedThisStep()) computeCell(i, j);
             }
         }
 
-        for(int i = 0; i < length; i++){
-            for(int j = 0; j < width; j++){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < length; j++){
                 Animal val = (Animal)(grid[i][j]);
 
                 val.setMoved(false);

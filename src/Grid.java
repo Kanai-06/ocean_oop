@@ -21,15 +21,15 @@ public class Grid {
         this.length = length;
         this.width = width;
 
-        grid = new Object[length][width];
+        grid = new Object[width][length];
     }
 
     public Grid merge(Grid animalGrid){
         Grid res = new Grid(length, width);
         nbWater = 0;
 
-        for(int i = 0; i < length; i++){
-            for(int j = 0; j < width; j++){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < length; j++){
                 if(((Animal)(animalGrid.grid[i][j])).isAlive()){
                     res.grid[i][j] = animalGrid.grid[i][j];
                 } else if(((Algae)(grid[i][j])).get()){
@@ -48,8 +48,8 @@ public class Grid {
     public String toString(){
         StringBuilder s = new StringBuilder();
 
-        for(int i = 0; i < length; i++){
-            for(int j = 0; j < width; j++){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < length; j++){
                 boolean present = false;
                 String cellType = WATER_CELL;
 

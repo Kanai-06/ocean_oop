@@ -2,8 +2,8 @@ public class AlgaeGrid extends Grid{
     public AlgaeGrid(int length, int width, double probability){
         super(length, width);
 
-        for(int i = 0; i < length; i++){
-            for(int j = 0; j < width; j++){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < length; j++){
                 grid[i][j] = new Algae(Math.random() < probability);
             }
         }
@@ -19,11 +19,11 @@ public class AlgaeGrid extends Grid{
                 int checkX = x + i;
                 int checkY = y + j;
                 
-                if(checkX > length - 1) checkX = checkX % length;
-                if(checkY > width - 1) checkY = checkY % width;
+                if(checkX > width - 1) checkX = checkX % width;
+                if(checkY > length - 1) checkY = checkY % length;
 
-                if(checkX < 0) checkX = length + checkX;
-                if(checkY < 0) checkY = width + checkY;
+                if(checkX < 0) checkX = width + checkX;
+                if(checkY < 0) checkY = length + checkY;
 
                 boolean algaePresent = ((Algae)(grid[checkX][checkY])).get();
 
@@ -44,10 +44,10 @@ public class AlgaeGrid extends Grid{
     }
 
     public void compute(){
-        Algae[][] nextGeneration = new Algae[length][width];
+        Algae[][] nextGeneration = new Algae[width][length];
 
-        for(int i = 0; i < length; i++){
-            for(int j = 0; j < width; j++){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < length; j++){
                 nextGeneration[i][j] = computeCell(i, j);
             }
         }

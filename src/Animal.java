@@ -3,13 +3,11 @@ public class Animal {
     private int energy;
     private int timeAlive;
     private boolean movedThisStep = false;
-    private static int nbAnimals = 0;
 
     public Animal(int energy){
         alive = energy > 0 ? true : false;
         this.energy = energy;
         timeAlive = 0;
-        nbAnimals++;
     }
 
     public Animal(boolean alive, int energy, int timeAlive){
@@ -21,7 +19,6 @@ public class Animal {
 
     public void die(){
         alive = false;
-        nbAnimals--;
     }
 
     public void step(){
@@ -65,6 +62,6 @@ public class Animal {
     }
 
     public static int nbAnimals(){
-        return nbAnimals;
+        return Fish.nbFish() + Shark.nbShark();
     }
 }

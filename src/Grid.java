@@ -13,7 +13,9 @@ public class Grid {
     private static final String WATER_CELL = BLUE + CELL + RESET; 
     private static final String ALGAE_CELL = GREEN + CELL + RESET;
     private static final String FISH_CELL = PURPLE + CELL + RESET; 
-    private static final String SHARK_CELL = RED + CELL + RESET; 
+    private static final String SHARK_CELL = RED + CELL + RESET;
+
+    private static int nbWater = 0;
 
     public Grid(int length, int width){
         this.length = length;
@@ -24,6 +26,7 @@ public class Grid {
 
     public Grid merge(Grid animalGrid){
         Grid res = new Grid(length, width);
+        nbWater = 0;
 
         for(int i = 0; i < length; i++){
             for(int j = 0; j < width; j++){
@@ -31,12 +34,16 @@ public class Grid {
                     res.grid[i][j] = animalGrid.grid[i][j];
                 } else if(((Algae)(grid[i][j])).get()){
                     res.grid[i][j] = grid[i][j];
-                }
+                } else nbWater++;
             }
         }
 
         return res;
     }
+
+    public static int nbWater(){
+        return nbWater;
+    } 
 
     public String toString(){
         StringBuilder s = new StringBuilder();

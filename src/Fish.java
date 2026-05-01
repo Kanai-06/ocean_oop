@@ -2,7 +2,7 @@ public class Fish extends Animal {
     public static final int DEFAULT_ENERGY = 3;
     public static final int MAX_ENERGY = 6;
     public static final int TIME_TO_BIRTH = 4;
-    public static int nbFish = 0;
+    private static int nbFish = 0;
     
     public Fish(){
         super(DEFAULT_ENERGY);
@@ -17,5 +17,9 @@ public class Fish extends Animal {
     public void die(){
         super.die();
         nbFish--;
+    }
+
+    public static int nbFish(){
+        return nbFish;
     }
 }

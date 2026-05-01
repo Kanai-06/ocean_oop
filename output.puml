@@ -1,0 +1,99 @@
+@startuml
+skinparam classAttributeIconSize 0
+class Main{
+- {static} scan : Scanner
++ {static} main(args : String[]) : void
++ {static} getBoolean(m : String) : boolean
++ {static} getDimensions() : int[]
++ {static} getProbas() : int[]
+}
+class AlgaeGrid{
++ AlgaeGrid(length : int, width : int, probability : double)
+# nbNeighors(x : int, y : int) : int
+# computeCell(x : int, y : int) : Algae
++ compute() : void
+}
+AlgaeGrid --|> Grid
+class Fish{
++ {static} DEFAULT_ENERGY : int
++ {static} MAX_ENERGY : int
++ {static} TIME_TO_BIRTH : int
+- {static} nbFish : int
++ Fish()
++ Fish(alive : boolean, energy : int, timeAlive : int)
++ die() : void
++ {static} nbFish() : int
+}
+Fish --|> Animal
+class Shark{
++ {static} DEFAULT_ENERGY : int
++ {static} MAX_ENERGY : int
++ {static} TIME_TO_BIRTH : int
+- {static} nbShark : int
++ Shark()
++ Shark(alive : boolean, energy : int, timeAlive : int)
++ die() : void
++ {static} nbShark() : int
+}
+Shark --|> Animal
+class Algae{
+- val : boolean
+- {static} nbAlgae : int
++ Algae(val : boolean)
++ set(val : boolean) : void
++ get() : boolean
++ {static} nbAlgae() : int
+}
+class InvalidValueException{
++ InvalidValueException(m : String)
+}
+InvalidValueException --|> Exception
+class Grid{
+# length : int
+# width : int
+# grid : Object[][]
+- {static} RED : String
+- {static} GREEN : String
+- {static} BLUE : String
+- {static} PURPLE : String
+- {static} RESET : String
+- {static} CELL : String
+- {static} WATER_CELL : String
+- {static} ALGAE_CELL : String
+- {static} FISH_CELL : String
+- {static} SHARK_CELL : String
+- {static} nbWater : int
++ Grid(length : int, width : int)
++ merge(animalGrid : Grid) : Grid
++ {static} nbWater() : int
++ toString() : String
++ {static} clear() : void
+}
+class AnimalGrid{
+- algaeGrid : Object[][]
++ AnimalGrid(length : int, width : int, fishProbability : double, sharkProbability : double, algaeGrid : AlgaeGrid)
+- availableNeighbors(x : int, y : int) : ArrayList<int[]>
+- computeCell(x : int, y : int) : void
+- moveCell(x : int, y : int, destX : int, destY : int, birth : boolean) : void
++ compute() : void
+}
+AnimalGrid --|> Grid
+class Animal{
+- alive : boolean
+- energy : int
+- timeAlive : int
+- movedThisStep : boolean
++ Animal(energy : int)
++ Animal(alive : boolean, energy : int, timeAlive : int)
++ die() : void
++ step() : void
++ checkBirth(timeToBirth : int) : boolean
++ clone() : Animal
++ eat(maxEnergy : int) : void
++ isAlive() : boolean
++ timeAlive() : int
++ setMoved(movedThisStep : boolean) : void
++ movedThisStep() : boolean
++ {static} nbAnimals() : int
+}
+@enduml
